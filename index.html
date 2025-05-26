@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicorn AI - Talk Less. Close More.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #121212;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Particles Background */
+        .particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(201, 75, 255, 0.6) 0%, rgba(0, 210, 255, 0.3) 100%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(odd) {
+            animation-direction: alternate;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+            50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+        }
+
+        /* Network Lines */
+        .network-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.3), transparent);
+            height: 1px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #C94BFF, #00D2FF);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            animation: logoGlow 3s ease-in-out infinite alternate;
+            padding: 10px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        @keyframes logoGlow {
+            0% { box-shadow: 0 0 20px rgba(201, 75, 255, 0.5); }
+            100% { box-shadow: 0 0 40px rgba(0, 210, 255, 0.8); }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem 6rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #C94BFF, #00D2FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            animation: textGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            0% { filter: drop-shadow(0 0 10px rgba(201, 75, 255, 0.5)); }
+            100% { filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.8)); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #CCCCCC;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #B77B3D, #D4941A);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.4);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.4s; }
+        section:nth-child(4) { animation-delay: 0.6s; }
+        section:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff, #CCCCCC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Value Proposition */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(201, 75, 255, 0.2);
+        }
+
+        .value-item::before {
+            content: '✓';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #00D2FF;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .value-item h3 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .value-item p {
+            color: #CCCCCC;
+            font-size: 0.9rem;
+        }
+
+        /* How It Works */
+        .workflow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .workflow-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .workflow-step::after {
+            content: '→';
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00D2FF;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .workflow-step:last-child::after {
+            display: none;
+        }
+
+        .workflow-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #C94BFF, #00D2FF);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .workflow-step:nth-child(2) .workflow-icon { animation-delay: 0.2s; }
+        .workflow-step:nth-child(3) .workflow-icon { animation-delay: 0.4s; }
+        .workflow-step:nth-child(4) .workflow-icon { animation-delay: 0.6s; }
+        .workflow-step:nth-child(5) .workflow-icon { animation-delay: 0.8s; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .workflow-step h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .workflow-step p {
+            color: #CCCCCC;
+            font-size: 0.9rem;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logos-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo-placeholder {
+            width: 120px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .logo-placeholder:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .testimonial {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #00D2FF;
+        }
+
+        .testimonial blockquote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #CCCCCC;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #C94BFF, #00D2FF);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Waitlist Form */
+        .waitlist {
+            background: #1e1e1e;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #CCCCCC;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #00D2FF;
+            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 3rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #CCCCCC;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00D2FF;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CCCCCC;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #00D2FF;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .workflow {
+                flex-direction: column;
+            }
+            
+            .workflow-step::after {
+                display: none;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logos-grid {
+                gap: 1rem;
+            }
+            
+            .logo-placeholder {
+                width: 100px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="https://github.com/I-am-Soma/unicorn-landing/blob/bfec3cb665d557f03e95571f4132a544b4add536/logo%20transparente.png?raw=true" alt="Unicorn AI Logo">
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Talk Less. Close More. Unicorn AI.</h1>
+            <p>Automated lead conversations powered by intelligence, not humans.</p>
+            <a href="#waitlist" class="cta-button">Request Early Access</a>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">From lead to close. Without lifting a finger.</h2>
+            <div class="value-grid">
+                <div class="value-item">
+                    <h3>Automated Lead Ingestion</h3>
+                    <p>Connect any source - forms, social media, CRM systems. Our AI captures and processes every lead automatically.</p>
+                </div>
+                <div class="value-item">
+                    <h3>AI-Powered Intent Classification</h3>
+                    <p>Advanced machine learning identifies hot prospects and routes them intelligently based on their behavior and interests.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Multilingual Real-Time Conversations</h3>
+                    <p>Engage prospects in their native language with contextual, personalized responses that feel authentically human.</p>
+                </div>
+                <div class="value-item">
+                    <h3>Zero Configuration Required</h3>
+                    <p>No coding, no CRM chaos. Deploy in minutes and start converting leads while you focus on closing deals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">How It Works - Visual Flow</h2>
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="workflow-icon">📥</div>
+                    <h4>Lead Captured</h4>
+                    <p>From any channel or source</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">🧠</div>
+                    <h4>AI Qualifies</h4>
+                    <p>Intent analysis & scoring</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">💬</div>
+                    <h4>Contact Initiated</h4>
+                    <p>Personalized outreach</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">🔄</div>
+                    <h4>Response Managed</h4>
+                    <p>Intelligent conversation flow</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">✅</div>
+                    <h4>Converted</h4>
+                    <p>Qualified leads ready to close</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section>
+        <div class="container">
+            <div class="social-proof">
+                <h2 class="section-title">Already trusted by political teams and marketing agencies.</h2>
+                <div class="logos-grid">
+                    <div class="logo-placeholder">Campaign Pro</div>
+                    <div class="logo-placeholder">Digital Reach</div>
+                    <div class="logo-placeholder">Lead Masters</div>
+                    <div class="logo-placeholder">Growth Hub</div>
+                </div>
+                <div class="testimonial">
+                    <blockquote>"This system saved us weeks of campaign work and generated real responses. Our conversion rate increased by 340% in the first month."</blockquote>
+                    <div class="testimonial-author">
+                        <div class="avatar">SM</div>
+                        <div>
+                            <div style="color: white; font-weight: 600;">Sarah Martinez</div>
+                            <div style="color: #CCCCCC; font-size: 0.9rem;">Campaign Director</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Signup -->
+    <section id="waitlist">
+        <div class="container">
+            <div class="waitlist">
+                <h2 class="section-title">We're launching soon.</h2>
+                <p style="color: #CCCCCC; margin-bottom: 2rem; font-size: 1.1rem;">Join the waitlist to get exclusive early access and special launch pricing.</p>
+                <form class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group form-full">
+                        <label for="usecase">Primary Use Case</label>
+                        <select id="usecase" name="usecase" required>
+                            <option value="">Select your use case</option>
+                            <option value="agency">Marketing Agency</option>
+                            <option value="political">Political Campaign</option>
+                            <option value="saas">SaaS Company</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-full">
+                        <button type="submit" class="cta-button" style="width: 100%; margin-top: 1rem;">Join the Waitlist</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <strong>hello@tryunicorn.app</strong>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                </div>
+                <div class="social-links">
+                    <a href="#">📧</a>
+                    <a href="#">🔗</a>
+                    <a href="#">🐦</a>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 Unicorn AI. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animated Particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                
+                container.appendChild(particle);
+            }
+            
+            // Create network lines
+            for (let i = 0; i < 20; i++) {
+                const line = document.createElement('div');
+                line.className = 'network-line';
+                line.style.width = Math.random() * 300 + 100 + 'px';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                line.style.animationDelay = Math.random() * 4 + 's';
+                
+                container.appendChild(line);
+            }
+        }
+
+        // Form handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const button = e.target.querySelector('button');
+            const originalText = button.textContent;
+            button.textContent = 'Joining...';
+            button.style.background = 'linear-gradient(135deg, #00D2FF, #C94BFF)';
+            
+            setTimeout(() => {
+                button.textContent = 'Welcome to the Future! ✨';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.style.background = 'linear-gradient(135deg, #B77B3D, #D4941A)';
+                    e.target.reset();
+                }, 3000);
+            }, 2000);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        createParticles();
+        
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
