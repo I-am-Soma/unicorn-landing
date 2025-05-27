@@ -780,24 +780,6 @@
             }
         }
 
-        // Form handling
-        document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const button = e.target.querySelector('button');
-            const originalText = button.textContent;
-            button.textContent = 'Joining...';
-            button.style.background = 'linear-gradient(135deg, #00D2FF, #C94BFF)';
-            
-            setTimeout(() => {
-                button.textContent = 'Welcome to the Future! ✨';
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = 'linear-gradient(135deg, #B77B3D, #D4941A)';
-                    e.target.reset();
-                }, 3000);
-            }, 2000);
-        });
-
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
