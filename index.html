@@ -685,30 +685,39 @@
             <div class="waitlist">
                 <h2 class="section-title">Join the Beta Program</h2>
                 <p style="color: #CCCCCC; margin-bottom: 2rem; font-size: 1.1rem;">We're accepting 20 more companies into our private beta. Get 3 months free and priority feature requests.</p>
-                <form class="form-grid">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group form-full">
-                        <label for="usecase">Primary Use Case</label>
-                        <select id="usecase" name="usecase" required>
-                            <option value="">Select your use case</option>
-                            <option value="saas">B2B SaaS</option>
-                            <option value="agency">Marketing Agency</option>
-                            <option value="tech">Tech Services</option>
-                            <option value="consulting">Consulting</option>
-                            <option value="other">Other B2B</option>
-                        </select>
-                    </div>
-                    <div class="form-full">
-                        <button type="submit" class="cta-button" style="width: 100%; margin-top: 1rem;">Apply for Beta Access</button>
-                    </div>
-                </form>
+                <form action="https://formspree.io/f/xyzwqqld" method="POST" class="form-grid">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_next" value="https://useunicorn.app/thank-you.html">
+
+  <div class="form-group">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+  </div>
+
+  <div class="form-group form-full">
+    <label for="usecase">Primary Use Case</label>
+    <select id="usecase" name="usecase" required>
+      <option value="">Select your use case</option>
+      <option value="saas">B2B SaaS</option>
+      <option value="agency">Marketing Agency</option>
+      <option value="tech">Tech Services</option>
+      <option value="political">Political Campaign</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+
+  <div class="form-full">
+    <button type="submit" class="cta-button" style="width: 100%; margin-top: 1rem;">
+      Apply for Beta Access
+    </button>
+  </div>
+</form>
+
             </div>
         </div>
     </section>
