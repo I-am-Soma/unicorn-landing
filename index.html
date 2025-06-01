@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unicorn AI - AI Sales Agent That Never Sleeps, Never Quits</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Unicorn AI - Talk Less. Close More.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,25 +12,15 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-green: #00FF88;
-            --primary-blue: #0066FF;
-            --accent-gold: #FFD700;
-            --urgency-red: #FF3366;
-            --dark-bg: #0A0A0A;
-            --card-bg: #1A1A1A;
-            --gradient: linear-gradient(135deg, #0066FF, #00FF88);
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
+            background: #121212;
             color: #ffffff;
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        /* Particles Background */
+        /* Animated Particles Background */
         .particles-container {
             position: fixed;
             top: 0;
@@ -43,14 +33,31 @@
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.6) 0%, rgba(0, 102, 255, 0.3) 100%);
+            background: radial-gradient(circle, rgba(201, 75, 255, 0.6) 0%, rgba(0, 210, 255, 0.3) 100%);
             border-radius: 50%;
             animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(odd) {
+            animation-direction: alternate;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
             50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+        }
+
+        /* Network Lines */
+        .network-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.3), transparent);
+            height: 1px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
         }
 
         /* Header */
@@ -74,7 +81,12 @@
             width: 160%;
             height: 160%;
             object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.3));
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+        }
+
+        @keyframes logoGlow {
+            0% { box-shadow: 0 0 20px rgba(201, 75, 255, 0.5); }
+            100% { box-shadow: 0 0 40px rgba(0, 210, 255, 0.8); }
         }
 
         /* Hero Section */
@@ -86,387 +98,66 @@
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 800;
-            background: var(--gradient);
+            background: linear-gradient(135deg, #C94BFF, #00D2FF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             line-height: 1.1;
             animation: textGlow 4s ease-in-out infinite alternate;
         }
 
         @keyframes textGlow {
-            0% { filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.5)); }
-            100% { filter: drop-shadow(0 0 20px rgba(0, 102, 255, 0.8)); }
-        }
-
-        .hero .subheadline {
-            font-size: 1.8rem;
-            color: var(--accent-gold);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            0% { filter: drop-shadow(0 0 10px rgba(201, 75, 255, 0.5)); }
+            100% { filter: drop-shadow(0 0 20px rgba(0, 210, 255, 0.8)); }
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: #CCCCCC;
             margin-bottom: 3rem;
-            max-width: 700px;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
             font-weight: 400;
         }
 
-        /* Dynamic Pricing Calculator */
-        .pricing-calculator {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 3rem;
-            margin: 4rem auto;
-            max-width: 600px;
-            border: 2px solid rgba(0, 255, 136, 0.2);
-            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.1);
-        }
-
-        .pricing-calculator h3 {
-            color: var(--primary-green);
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .slider-container {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .price-slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #333;
-            outline: none;
-            margin-bottom: 1rem;
-        }
-
-        .price-slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: var(--gradient);
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .price-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-
-        .price-display {
-            font-size: 4rem;
-            font-weight: 900;
-            color: var(--primary-green);
-            margin: 1rem 0;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-        }
-
-        .tier-benefits {
-            background: rgba(0, 255, 136, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .tier-benefits h4 {
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #B77B3D, #D4941A);
             color: white;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        .tier-benefits ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .tier-benefits li {
-            padding: 0.5rem 0;
-            color: #CCCCCC;
-            font-size: 1.1rem;
-        }
-
-        .cta-dynamic {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 1.2rem 3rem;
+            text-decoration: none;
             border-radius: 50px;
-            font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
-            width: 100%;
+            font-weight: 600;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .cta-dynamic:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
-        }
-
-        /* Founding Member Section */
-        .founding-member-offer {
-            background: linear-gradient(135deg, rgba(255, 51, 102, 0.1), rgba(255, 215, 0, 0.1));
-            border-radius: 25px;
-            padding: 4rem;
-            margin: 4rem 0;
-            border: 2px solid var(--urgency-red);
+            border: none;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
-        .founding-member-offer::before {
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 240, 255, 0.4);
+        }
+
+        .cta-button::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-            animation: shine 3s ease-in-out infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .urgency-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .urgency-header h2 {
-            color: var(--urgency-red);
-            font-size: 1.8rem;
-            font-weight: 800;
-        }
-
-        .spots-left {
-            background: var(--urgency-red);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: 700;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        .pricing-box {
-            text-align: center;
-            margin: 2rem 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .price-strike {
-            font-size: 1.2rem;
-            color: #666;
-            text-decoration: line-through;
-        }
-
-        .price-founding {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--accent-gold);
-            margin: 1rem 0;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-        }
-
-        .savings {
-            color: var(--urgency-red);
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-
-        .benefits-stack {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .benefits-stack ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .benefits-stack li {
-            padding: 0.8rem 0;
-            color: #CCCCCC;
-            font-size: 1.1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .total-value {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: var(--gradient);
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .guarantee-section {
-            background: rgba(0, 255, 136, 0.1);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid var(--primary-green);
-            position: relative;
-            z-index: 2;
-        }
-
-        .cta-founding {
-            background: var(--accent-gold);
-            color: black;
-            border: none;
-            padding: 1.5rem 3rem;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 1.3rem;
-            cursor: pointer;
+            top: 0;
+            left: -100%;
             width: 100%;
-            margin: 2rem 0;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 2;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.3), transparent);
+            transition: left 0.5s;
         }
 
-        .cta-founding:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.4);
-        }
-
-        .urgency-footer {
-            text-align: center;
-            color: var(--urgency-red);
-            font-weight: 600;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Social Proof Amplification */
-        .social-proof-amplified {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 4rem;
-            margin: 4rem 0;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .result-card {
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 15px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .result-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 255, 136, 0.2);
-        }
-
-        .result-card h4 {
-            color: var(--primary-green);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-        }
-
-        .result-metric {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent-gold);
-            margin: 1rem 0;
-        }
-
-        .testimonial-enhanced {
-            background: rgba(0, 102, 255, 0.1);
-            border-left: 4px solid var(--primary-blue);
-            border-radius: 15px;
-            padding: 2rem;
-            margin: 3rem 0;
-            font-style: italic;
-            font-size: 1.2rem;
-        }
-
-        /* Tiers Preview */
-        .tiers-preview {
-            margin: 4rem 0;
-            text-align: center;
-        }
-
-        .tiers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .tier {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 2rem;
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .tier.popular {
-            border-color: var(--primary-green);
-            transform: scale(1.05);
-            background: rgba(0, 255, 136, 0.1);
-        }
-
-        .tier:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-blue);
-        }
-
-        .tier h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .tier p {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent-gold);
-            margin-bottom: 0.5rem;
+        .cta-button:hover::before {
+            left: 100%;
         }
 
         /* Container */
@@ -476,82 +167,9 @@
             padding: 0 2rem;
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Value Grid */
-        .value-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .value-item {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .value-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
-            border-color: var(--primary-green);
-        }
-
-        .value-item::before {
-            content: '→';
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            color: var(--primary-green);
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero .subheadline {
-                font-size: 1.3rem;
-            }
-            
-            .pricing-calculator,
-            .founding-member-offer {
-                padding: 2rem;
-                margin: 2rem 0;
-            }
-            
-            .price-display {
-                font-size: 3rem;
-            }
-            
-            .tiers-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Animations */
+        /* Section Styles */
         section {
+            padding: 5rem 0;
             opacity: 0;
             transform: translateY(50px);
             animation: fadeInUp 1s ease-out forwards;
@@ -566,6 +184,404 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff, #CCCCCC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Value Proposition */
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-item {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(201, 75, 255, 0.2);
+        }
+
+        .value-item::before {
+            content: '✓';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #00D2FF;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .value-item h3 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .value-item p {
+            color: #CCCCCC;
+            font-size: 0.9rem;
+        }
+
+        /* How It Works - Workflow expandido */
+        .workflow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .workflow-step {
+            flex: 1;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+        }
+
+        .workflow-step::after {
+            content: '→';
+            position: absolute;
+            right: -0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00D2FF;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .workflow-step:last-child::after {
+            display: none;
+        }
+
+        .workflow-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #C94BFF, #00D2FF);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.8rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        .workflow-step:nth-child(1) .workflow-icon { animation-delay: 0s; }
+        .workflow-step:nth-child(2) .workflow-icon { animation-delay: 0.1s; }
+        .workflow-step:nth-child(3) .workflow-icon { animation-delay: 0.2s; }
+        .workflow-step:nth-child(4) .workflow-icon { animation-delay: 0.3s; }
+        .workflow-step:nth-child(5) .workflow-icon { animation-delay: 0.4s; }
+        .workflow-step:nth-child(6) .workflow-icon { animation-delay: 0.5s; }
+        .workflow-step:nth-child(7) .workflow-icon { animation-delay: 0.6s; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .workflow-step h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .workflow-step p {
+            color: #CCCCCC;
+            font-size: 0.8rem;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logos-grid {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo-placeholder {
+            width: 120px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .logo-placeholder:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .testimonial {
+            max-width: 600px;
+            margin: 2rem auto 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #00D2FF;
+        }
+
+        .testimonial blockquote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #CCCCCC;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #C94BFF, #00D2FF);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Waitlist Form */
+        .waitlist {
+            background: #1e1e1e;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #CCCCCC;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group select {
+            background: rgba(30, 30, 30, 0.9);
+            color: #CCCCCC;
+        }
+
+        .form-group select option {
+            background: #1e1e1e;
+            color: #CCCCCC;
+            padding: 0.5rem;
+        }
+
+        .form-group select option:hover {
+            background: linear-gradient(135deg, rgba(201, 75, 255, 0.2), rgba(0, 210, 255, 0.2));
+            color: white;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #00D2FF;
+            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #666;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        /* Success Message */
+        .form-success {
+            display: none;
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(0, 210, 255, 0.1);
+            border: 2px solid #00D2FF;
+            border-radius: 15px;
+            color: #00D2FF;
+            font-size: 1.2rem;
+            font-weight: 600;
+            animation: successPulse 2s ease-out;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(0.9); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 3rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #CCCCCC;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #00D2FF;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #CCCCCC;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #00D2FF;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .workflow {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .workflow-step::after {
+                display: none;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logos-grid {
+                gap: 1rem;
+            }
+            
+            .logo-placeholder {
+                width: 100px;
+                height: 50px;
+            }
+
+            .workflow-step {
+                min-width: 150px;
+            }
+
+            .workflow-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -584,224 +600,209 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>AI Sales Agent That Never Sleeps, Never Quits</h1>
-            <div class="subheadline">From $5 to $5M - Pay Only For Results, Not Software</div>
-            <p>While others offer chatbots, we deliver AI sales reps that conduct full sales conversations, handle objections like seasoned professionals, and close deals 24/7 across all time zones. The difference? Our AI doesn't just chat - it SELLS.</p>
-            
-            <!-- Dynamic Pricing Calculator -->
-            <div class="pricing-calculator">
-                <h3>🎯 How much do you want to invest in AI sales this month?</h3>
-                
-                <div class="slider-container">
-                    <input type="range" min="5" max="5000" value="250" class="price-slider" id="priceSlider">
-                    <div class="price-display">$<span id="selected-price">250</span>/month</div>
-                </div>
-                
-                <div class="tier-benefits">
-                    <h4>At $<span class="price-echo">250</span>, you get:</h4>
-                    <ul>
-                        <li>✅ <span id="conversations">625</span> qualified conversations</li>
-                        <li>✅ <span id="leads">156</span> hot leads generated</li>
-                        <li>✅ <span id="features">Pro features</span> included</li>
-                        <li>✅ $<span id="roi">62,500</span> potential revenue return</li>
-                    </ul>
-                </div>
-                
-                <button class="cta-dynamic" onclick="scrollToOffer()">GET EARLY ACCESS - Save $200</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Social Proof Amplification -->
-    <section>
-        <div class="container">
-            <div class="social-proof-amplified">
-                <h2 class="section-title">Join 127+ Companies Already Crushing Their Sales Goals</h2>
-                
-                <div class="results-grid">
-                    <div class="result-card">
-                        <h4>🏢 REAL ESTATE AGENCY</h4>
-                        <div class="result-metric">340%</div>
-                        <p>More qualified leads</p>
-                        <p><strong>Revenue: +$47,000 in 6 weeks</strong></p>
-                    </div>
-                    
-                    <div class="result-card">
-                        <h4>🚗 AUTO DEALERSHIP</h4>
-                        <div class="result-metric">89%</div>
-                        <p>Faster sales cycles</p>
-                        <p><strong>Revenue: +$2.3M in pipeline</strong></p>
-                    </div>
-                    
-                    <div class="result-card">
-                        <h4>💊 INSURANCE BROKER</h4>
-                        <div class="result-metric">67%</div>
-                        <p>Conversion improvement</p>
-                        <p><strong>Revenue: +$156K additional ARR</strong></p>
-                    </div>
-                </div>
-                
-                <div class="testimonial-enhanced">
-                    "This AI literally never stops working. It's like having a top sales rep who works 24/7 for pennies on the dollar."
-                    <br><br>
-                    <strong>- Sarah Chen, CEO of GrowthCorp</strong>
-                </div>
-            </div>
+            <h1><span style="background: linear-gradient(135deg, #C94BFF, #00D2FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI Sales Agent</span> <span style="color: white;">That Never Sleeps,</span><br><span style="background: linear-gradient(135deg, #C94BFF, #00D2FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Never Quits.</span></h1>
+            <p>We're building the first AI that handles complete sales conversations from lead to close. Currently in pilot with 5 B2B companies seeing 3x higher conversion rates.</p>
+            <a href="#waitlist" class="cta-button">Request Early Access</a>
         </div>
     </section>
 
     <!-- Value Proposition -->
     <section>
         <div class="container">
-            <h2 class="section-title">Beyond Chatbots - We Build AI That SELLS</h2>
+            <h2 class="section-title">The Problem: Sales Teams Waste 60% of Time on Unqualified Leads</h2>
+            <div style="text-align: center; color: #CCCCCC; font-size: 1.2rem; margin-bottom: 3rem;">
+                Our AI handles the entire pipeline so your team focuses only on closing qualified opportunities.
+            </div>
             <div class="value-grid">
                 <div class="value-item">
-                    <h3>Complete Sales Conversations</h3>
-                    <p>Not just Q&A - our AI conducts full sales conversations, builds relationships, and guides prospects through your entire sales funnel.</p>
+                    <h3>Complete Conversation Handling</h3>
+                    <p>Unlike simple chatbots, our AI conducts full sales conversations, handles objections, and builds relationships across multiple touchpoints.</p>
                 </div>
                 <div class="value-item">
-                    <h3>Handles Objections Like Pros</h3>
-                    <p>Advanced AI trained on thousands of sales scenarios. It doesn't just answer questions - it overcomes objections and closes deals.</p>
+                    <h3>Real-Time Lead Qualification</h3>
+                    <p>Advanced ML models analyze intent, budget, and timeline to instantly identify and prioritize your hottest prospects.</p>
                 </div>
                 <div class="value-item">
-                    <h3>24/7 Global Coverage</h3>
-                    <p>Never miss a lead again. Your AI sales rep works across all time zones, following up instantly and maintaining momentum.</p>
+                    <h3>Multi-Channel Orchestration</h3>
+                    <p>Seamlessly manages conversations across email, SMS, social media, and web chat with consistent messaging.</p>
                 </div>
                 <div class="value-item">
-                    <h3>Scales Without Hiring</h3>
-                    <p>Go from $5 to $5M in revenue without adding a single sales person. Pay only for results, not software licenses.</p>
+                    <h3>10-Minute Setup</h3>
+                    <p>Connect your existing tools and go live in minutes. No technical team required, no workflow disruption.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Tiers Preview -->
+    <!-- How It Works -->
     <section>
         <div class="container">
-            <div class="tiers-preview">
-                <h2 class="section-title">Choose Your Revenue Acceleration Tier</h2>
-                
-                <div class="tiers-grid">
-                    <div class="tier">
-                        <h4>💰 HUSTLER</h4>
-                        <p>$5-50/month</p>
-                        <span>Perfect for solopreneurs</span>
+            <h2 class="section-title">How It Works - Complete Sales Flow</h2>
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="workflow-icon">📥</div>
+                    <h4>Lead Captured</h4>
+                    <p>From any channel or source</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">🧠</div>
+                    <h4>AI Qualifies</h4>
+                    <p>Intent analysis & scoring</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">📝</div>
+                    <h4>Custom Prompts</h4>
+                    <p>Personalized messaging based on your brand voice</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">💬</div>
+                    <h4>Contact Initiated</h4>
+                    <p>Multi-channel outreach</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">🔄</div>
+                    <h4>Response Managed</h4>
+                    <p>Intelligent conversation flow</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">💰</div>
+                    <h4>Price Negotiation</h4>
+                    <p>AI handles pricing discussions with your preset parameters</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="workflow-icon">✅</div>
+                    <h4>Converted</h4>
+                    <p>Qualified leads ready to close</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section>
+        <div class="container">
+            <div class="social-proof">
+                <h2 class="section-title">Early Results from Pilot Customers</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: bold; color: #00D2FF;">3x</div>
+                        <div style="color: #CCCCCC;">Higher Conversion Rate</div>
                     </div>
-                    
-                    <div class="tier popular">
-                        <h4>🚀 GROWTH</h4>
-                        <p>$50-500/month</p>
-                        <span>Small business acceleration</span>
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: bold; color: #C94BFF;">24/7</div>
+                        <div style="color: #CCCCCC;">Lead Response Time</div>
                     </div>
-                    
-                    <div class="tier">
-                        <h4>⚡ SCALE</h4>
-                        <p>$500-5K/month</p>
-                        <span>Enterprise-level results</span>
+                    <div style="text-align: center;">
+                        <div style="font-size: 3rem; font-weight: bold; color: #00D2FF;">80%</div>
+                        <div style="color: #CCCCCC;">Reduction in Manual Work</div>
                     </div>
-                    
-                    <div class="tier">
-                        <h4>👑 CUSTOM</h4>
-                        <p>$5K+/month</p>
-                        <span>White-glove implementation</span>
+                </div>
+                <div class="logos-grid">
+                    <div style="color: #CCCCCC; font-size: 1.1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #00D2FF; margin-bottom: 0.5rem;">5</div>
+                        Pilot Customers
+                    </div>
+                    <div style="color: #CCCCCC; font-size: 1.1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #C94BFF; margin-bottom: 0.5rem;">200+</div>
+                        Waitlist Signups
+                    </div>
+                    <div style="color: #CCCCCC; font-size: 1.1rem; text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: #00D2FF; margin-bottom: 0.5rem;">$50K</div>
+                        Pre-Orders (30 days)
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <blockquote>"We went from 12% to 36% lead conversion in our first month. The AI handles objections better than most of our junior sales reps."</blockquote>
+                    <div class="testimonial-author">
+                        <div class="avatar">JK</div>
+                        <div>
+                            <div style="color: white; font-weight: 600;">James Kim</div>
+                            <div style="color: #CCCCCC; font-size: 0.9rem;">VP Sales, TechFlow Solutions</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Founding Member Offer -->
-    <section id="founding-offer">
+    <!-- Waitlist Signup -->
+    <section id="waitlist">
         <div class="container">
-            <div class="founding-member-offer">
-                <div class="urgency-header">
-                    <h2>🔥 FOUNDING MEMBER OPPORTUNITY</h2>
-                    <span class="spots-left">Only 19 spots left</span>
-                </div>
+            <div class="waitlist">
+                <h2 class="section-title">Join the Beta Program</h2>
+                <p style="color: #CCCCCC; margin-bottom: 2rem; font-size: 1.1rem;">We're accepting 20 more companies into our private beta. Get 3 months free and priority feature requests.</p>
                 
-                <h3 style="font-size: 2.5rem; text-align: center; margin: 2rem 0; position: relative; z-index: 2;">Join the $10M Revenue Challenge</h3>
-                <p style="text-align: center; font-size: 1.2rem; color: #CCCCCC; margin-bottom: 2rem; position: relative; z-index: 2;">4 companies joined today and are already seeing 300%+ ROI</p>
-                
-                <div class="pricing-box">
-                    <div class="price-strike">Regular Price: $297</div>
-                    <div class="price-founding">FOUNDING MEMBER: $97</div>
-                    <div class="savings">SAVE $200 (67% OFF)</div>
-                </div>
-                
-                <div class="benefits-stack">
-                    <h4>Your Founding Member Package:</h4>
-                    <ul>
-                        <li>✅ 3 months unlimited access ($450 value)</li>
-                        <li>✅ Revenue guarantee or money back ($500 value)</li>
-                        <li>✅ Direct line to founders ($300 value)</li>
-                        <li>✅ Priority feature requests ($200 value)</li>
-                        <li>✅ Case study participation bonus ($500 value)</li>
-                        <li>✅ Lifetime VIP discount ($200+ value)</li>
-                    </ul>
-                    <div class="total-value">
-                        <strong>Total Value: $2,150 | Your Investment: $97</strong>
+                <form id="contact-form" class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
                     </div>
-                </div>
-                
-                <div class="guarantee-section">
-                    <h4>🛡️ ZERO RISK TRIPLE GUARANTEE:</h4>
-                    <p>💰 Money back if no 200% sales improvement<br>
-                    💰 We work free until you see results<br>
-                    💰 $500 bonus if you're not satisfied</p>
-                </div>
-                
-                <button class="cta-founding" onclick="openForm()">
-                    SECURE MY FOUNDING MEMBER SPOT - $97
-                </button>
-                
-                <div class="urgency-footer">
-                    ⏰ Price increases to $147 in <span id="countdown">48 hours</span><br>
-                    💎 Limited to revenue-focused companies only
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Simple Contact Form -->
-    <section id="contact-form-section" style="display: none;">
-        <div class="container">
-            <div style="background: var(--card-bg); border-radius: 20px; padding: 3rem; max-width: 500px; margin: 0 auto;">
-                <h3 style="text-align: center; margin-bottom: 2rem; color: var(--primary-green);">Secure Your Founding Member Spot</h3>
-                
-                <form id="contact-form" style="display: flex; flex-direction: column; gap: 1rem;">
-                    <input type="email" placeholder="Enter your business email" required style="padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; font-size: 1rem;">
-                    
-                    <select name="budget" required style="padding: 1rem; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: var(--card-bg); color: white; font-size: 1rem;">
-                        <option value="">Select your budget range</option>
-                        <option value="5-50">$5-50/month (Hustler)</option>
-                        <option value="50-500">$50-500/month (Growth)</option>
-                        <option value="500-5000">$500-5K/month (Scale)</option>
-                        <option value="5000+">$5K+/month (Custom)</option>
-                    </select>
-                    
-                    <button type="submit" class="cta-founding" style="margin: 1rem 0 0 0;">
-                        RESERVE MY FOUNDING MEMBER SPOT
-                    </button>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group form-full">
+                        <label for="usecase">Primary Use Case</label>
+                        <select id="usecase" name="usecase" required>
+                            <option value="">Select your use case</option>
+                            <option value="saas">B2B SaaS</option>
+                            <option value="agency">Marketing Agency</option>
+                            <option value="tech">Tech Services</option>
+                            <option value="political">Political Campaign</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-full">
+                        <button type="submit" class="cta-button" style="width: 100%; margin-top: 1rem;">
+                            Apply for Beta Access
+                        </button>
+                    </div>
                 </form>
-                
-                <div id="form-success" style="display: none; text-align: center; margin-top: 2rem; padding: 2rem; background: rgba(0, 255, 136, 0.1); border: 2px solid var(--primary-green); border-radius: 15px; color: var(--primary-green);">
+
+                <div id="form-success" class="form-success">
                     🎉 <strong>You're in!</strong> We'll contact you within 24 hours to get you started.
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <strong>hello@useunicorn.app</strong>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                </div>
+                <div class="social-links">
+                    <a href="#">📧</a>
+                    <a href="#">🔗</a>
+                    <a href="#">🐦</a>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2025 Unicorn AI. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // Particles
+        // Animated Particles
         function createParticles() {
             const container = document.getElementById('particles');
-            const particleCount = 30;
+            const particleCount = 50;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                const size = Math.random() * 3 + 1;
+                const size = Math.random() * 4 + 2;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 particle.style.left = Math.random() * 100 + '%';
@@ -811,161 +812,12 @@
                 
                 container.appendChild(particle);
             }
-        }
-
-        // Pricing Calculator
-        const priceSlider = document.getElementById('priceSlider');
-        const priceDisplay = document.getElementById('selected-price');
-        const conversationsEl = document.getElementByI
-        // Pricing Calculator
-        const priceSlider = document.getElementById('priceSlider');
-        const priceDisplay = document.getElementById('selected-price');
-        const conversationsEl = document.getElementById('conversations');
-        const leadsEl = document.getElementById('leads');
-        const featuresEl = document.getElementById('features');
-        const roiEl = document.getElementById('roi');
-        const priceEcho = document.querySelector('.price-echo');
-
-        function updatePricing(value) {
-            const price = parseInt(value);
-            priceDisplay.textContent = price;
-            priceEcho.textContent = price;
-
-            // Cálculos realistas basados en el precio
-            let conversations, leads, features, roi;
-
-            if (price <= 25) {
-                conversations = Math.round(price * 2.5);
-                leads = Math.round(conversations * 0.15);
-                features = "Starter features";
-                roi = Math.round(price * 150);
-            } else if (price <= 100) {
-                conversations = Math.round(price * 3.5);
-                leads = Math.round(conversations * 0.20);
-                features = "Growth features";
-                roi = Math.round(price * 200);
-            } else if (price <= 500) {
-                conversations = Math.round(price * 2.8);
-                leads = Math.round(conversations * 0.25);
-                features = "Pro features";
-                roi = Math.round(price * 250);
-            } else if (price <= 1500) {
-                conversations = Math.round(price * 2.2);
-                leads = Math.round(conversations * 0.30);
-                features = "Scale features";
-                roi = Math.round(price * 180);
-            } else {
-                conversations = Math.round(price * 1.8);
-                leads = Math.round(conversations * 0.35);
-                features = "Enterprise features";
-                roi = Math.round(price * 150);
-            }
-
-            conversationsEl.textContent = conversations;
-            leadsEl.textContent = leads;
-            featuresEl.textContent = features;
-            roiEl.textContent = roi.toLocaleString();
-        }
-
-        priceSlider.addEventListener('input', function() {
-            updatePricing(this.value);
-        });
-
-        // Smooth scroll
-        function scrollToOffer() {
-            document.getElementById('founding-offer').scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-
-        // Form handling
-        function openForm() {
-            document.getElementById('contact-form-section').style.display = 'block';
-            document.getElementById('contact-form-section').scrollIntoView({
-                behavior: 'smooth'
-            });
-        }
-
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
             
-            // Simulate form submission
-            setTimeout(() => {
-                document.getElementById('contact-form').style.display = 'none';
-                document.getElementById('form-success').style.display = 'block';
-            }, 1000);
-        });
-
-        // Countdown timer
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const targetTime = now + (48 * 60 * 60 * 1000); // 48 hours from now
-            
-            setInterval(() => {
-                const currentTime = new Date().getTime();
-                const distance = targetTime - currentTime;
-                
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                
-                document.getElementById('countdown').textContent = `${hours}h ${minutes}m`;
-            }, 60000);
-        }
-
-        // Enhanced particles with more dynamic movement
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 40;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const size = Math.random() * 4 + 1;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
-                
-                // Random colors for more dynamic effect
-                const colors = [
-                    'radial-gradient(circle, rgba(0, 255, 136, 0.6) 0%, rgba(0, 102, 255, 0.3) 100%)',
-                    'radial-gradient(circle, rgba(0, 102, 255, 0.6) 0%, rgba(0, 255, 136, 0.3) 100%)',
-                    'radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, rgba(0, 255, 136, 0.2) 100%)'
-                ];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
-                container.appendChild(particle);
-            }
-        }
-
-        // Initialize everything when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            updatePricing(250); // Initialize with default value
-            updateCountdown();
-            
-            // Add some random movement to particles
-            setInterval(() => {
-                const particles = document.querySelectorAll('.particle');
-                particles.forEach(particle => {
-                    if (Math.random() < 0.1) { // 10% chance each interval
-                        particle.style.transform = `translateX(${Math.random() * 20 - 10}px) translateY(${Math.random() * 20 - 10}px)`;
-                    }
-                });
-            }, 3000);
-        });
-
-        // Add dynamic spots counter
-        let spotsLeft = 19;
-        setInterval(() => {
-            if (Math.random() < 0.3 && spotsLeft > 5) { // 30% chance, minimum 5 spots
-                spotsLeft--;
-                document.querySelector('.spots-left').textContent = `Only ${spotsLeft} spots left`;
-            }
-        }, 45000); // Every 45 seconds
-    </script>
-</body>
-</html>
+            // Create network lines
+            for (let i = 0; i < 20; i++) {
+                const line = document.createElement('div');
+                line.className = 'network-line';
+                line.style.width = Math.random() * 300 + 100 + 'px';
+                line.style.left = Math.random() * 100 + '%';
+                line.style.top = Math.random() * 100 + '%';
+                line.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
