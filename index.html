@@ -355,6 +355,17 @@
             transition: border-color 0.3s ease;
         }
 
+        .form-group select {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .form-group select option {
+            background: #1a1a1a;
+            color: white;
+            padding: 10px;
+        }
+
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
@@ -624,7 +635,7 @@
                 <p class="cta-subtitle">Dynamic investment model: Start with $5 or scale to $5M. We're accepting 20 more companies into our private beta.</p>
                 <div class="countdown-section">
                     <div class="countdown-title">Limited Time Beta Access</div>
-                    <div class="countdown-timer" id="countdown">47h 23m</div>
+                    <div class="countdown-timer" id="countdown">20d 19h 33m</div>
                     <div class="spots-left">Only 19 spots left</div>
                 </div>
                 <button onclick="openForm()" class="cta-button">Join Private Beta</button>
@@ -738,9 +749,10 @@
             }
         }
 
-        // Initialize everything when page loads
+        // Initialize countdown when page loads
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
+            updateCountdown(); // Initialize functional countdown
             
             // Add some random movement to particles
             setInterval(() => {
@@ -795,23 +807,37 @@
             }
         });
 
-        // Countdown timer
+        // Countdown timer - functional with real countdown
         function updateCountdown() {
+            // Set target date: 20 days, 19 hours, 33 minutes from now
             const now = new Date().getTime();
-            const targetTime = now + (48 * 60 * 60 * 1000); // 48 hours from now
+            const targetTime = now + (20 * 24 * 60 * 60 * 1000) + (19 * 60 * 60 * 1000) + (33 * 60 * 1000);
             
-            setInterval(() => {
+            function updateDisplay() {
                 const currentTime = new Date().getTime();
                 const distance = targetTime - currentTime;
                 
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                
-                const countdownEl = document.getElementById('countdown');
-                if (countdownEl) {
-                    countdownEl.textContent = `${hours}h ${minutes}m`;
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    const countdownEl = document.getElementById('countdown');
+                    if (countdownEl) {
+                        countdownEl.textContent = `${days}d ${hours}h ${minutes}m`;
+                    }
+                } else {
+                    const countdownEl = document.getElementById('countdown');
+                    if (countdownEl) {
+                        countdownEl.textContent = "Beta Closed";
+                    }
                 }
-            }, 60000);
+            }
+            
+            // Update immediately and then every second
+            updateDisplay();
+            setInterval(updateDisplay, 1000);
         }
 
         // Initialize countdown
