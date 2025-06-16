@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+/* Mobile responsive */<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -66,11 +66,12 @@
             z-index: 2;
         }
 
-        /* Header - simple and minimal */
+        /* Header - enhanced for logo prominence */
         header {
-            padding: 20px 0;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
+            padding: 25px 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(66, 133, 244, 0.2);
         }
 
         .header-content {
@@ -80,8 +81,15 @@
         }
 
         .logo {
-            height: 80px;
+            height: 60px;
             width: auto;
+            filter: drop-shadow(0 4px 12px rgba(66, 133, 244, 0.4));
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 6px 20px rgba(66, 133, 244, 0.6));
         }
 
         .beta-badge {
@@ -517,7 +525,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="https://github.com/I-am-Soma/unicorn-landing/blob/main/logo%20transparente.png" alt="Unicorn AI" class="logo">
+                <img src="https://raw.githubusercontent.com/I-am-Soma/unicorn-landing/main/logo%20transparente.png" alt="Unicorn AI" class="logo">
                 <div class="beta-badge">Private Beta</div>
             </div>
         </div>
