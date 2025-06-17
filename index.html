@@ -9,10 +9,9 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        .form-row {
-            grid-template-columns: 1fr;
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
 
         body {
@@ -519,7 +518,6 @@
         .delay-3 { animation-delay: 0.6s; }
         .delay-4 { animation-delay: 0.8s; }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
     <div id="particles"></div>
@@ -725,10 +723,6 @@
     </main>
 
     <script>
-        const supabaseUrl = 'https://wxbvusaumkdjnrsonxkw.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
         // Enhanced particles with more dynamic movement
         function createParticles() {
             const container = document.getElementById('particles');
@@ -801,31 +795,18 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('contact-form');
             if (form) {
-                form.addEventListener('submit', async function(e) {
+                form.addEventListener('submit', function(e) {
                     e.preventDefault();
+                    
                     const submitBtn = form.querySelector('.submit-btn');
                     submitBtn.textContent = 'Submitting...';
                     submitBtn.disabled = true;
-
-                    const data = {
-                        first_name: form.firstName.value,
-                        last_name: form.lastName.value,
-                        email: form.email.value,
-                        company: form.company.value,
-                        role: form.role.value,
-                        budget: form.budget.value,
-                        current_challenge: form.currentChallenge.value
-                    };
-
-                    const { error } = await supabase.from('contact_form').insert(data);
-                    if (!error) {
-                        form.style.display = 'none';
+                    
+                    // Simulate form submission
+                    setTimeout(() => {
+                        document.getElementById('contact-form').style.display = 'none';
                         document.getElementById('form-success').style.display = 'block';
-                    } else {
-                        alert('Error al guardar: ' + error.message);
-                        submitBtn.textContent = 'Submit';
-                        submitBtn.disabled = false;
-                    }
+                    }, 1500);
                 });
             }
         });
