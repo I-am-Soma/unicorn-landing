@@ -809,10 +809,16 @@
 
         // Form handling functions
         function openForm() {
-            document.getElementById('contact-form-section').style.display = 'block';
-            document.getElementById('contact-form-section').scrollIntoView({
-                behavior: 'smooth'
-            });
+            const formSection = document.getElementById('contact-form-section');
+            formSection.style.display = 'block';
+            
+            // Scroll to form with a small delay to ensure it's visible
+            setTimeout(function() {
+                formSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 100);
         }
 
         function showError(message) {
@@ -835,3 +841,100 @@
             setInterval(function() {
                 const particles = document.querySelectorAll('.particle');
                 particles.forEach(function(particle) {
+                    if (Math.random() < 0.1) { // 10% chance each interval
+                        particle.style.transform = `translateX(${Math.random() * 20 - 10}px) translateY(${Math.random() * 20 - 10}px)`;
+                    }
+                });
+            }, 3000);
+
+            // Intersection Observer for animations
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(function(el) {
+                observer.observe(el);
+            });
+
+            // Form submission handler
+            const form = document.getElementById('contact-form');
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    hideError();
+                    
+                    const submitBtn = form.querySelector('.submit-btn');
+                    const originalText = submitBtn.textContent;
+                    submitBtn.textContent = 'Enviando...';
+                    submitBtn.disabled = true;
+                    
+                    try {
+                        // Prepare form data
+                        const formData = {
+                            first_name: document.getElementById('firstName').value.trim(),
+                            last_name: document.getElementById('lastName').value.trim(),
+                            email: document.getElementById('email').value.trim(),
+                            company: document.getElementById('company').value.trim(),
+                            role: document.getElementById('role').value,
+                            budget: document.getElementById('budget').value || null,
+                            current_challenge: document.getElementById('currentChallenge').value.trim() || null,
+                            created_at: new Date().toISOString()
+                        };
+
+                        // Validate required fields
+                        if (!formData.first_name || !formData.last_name || !formData.email || !formData.company || !formData.role) {
+                            throw new Error('Por favor completa todos los campos obligatorios');
+                        }
+
+                        // Submit to Supabase
+                        await submitToSupabase(formData);
+                        
+                        // Show success
+                        document.getElementById('contact-form').style.display = 'none';
+                        document.getElementById('form-success').style.display = 'block';
+                        
+                    } catch (error) {
+                        showError('Error al enviar el formulario: ' + error.message);
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }
+                });
+            }
+        });
+
+        // Countdown timer - functional with real countdown
+        function updateCountdown() {
+            // Set target date: 20 days, 19 hours, 33 minutes from now
+            const now = new Date().getTime();
+            const targetTime = now + (20 * 24 * 60 * 60 * 1000) + (19 * 60 * 60 * 1000) + (33 * 60 * 1000);
+            
+            function updateDisplay() {
+                const currentTime = new Date().getTime();
+                const distance = targetTime - currentTime;
+                
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    
+                    const countdownEl = document.getElementById('countdown');
+                    if (countdownEl) {
+                        countdownEl.textContent = `${days}d ${hours}h ${minutes}m`;
+                    }
+                } else {
+                    const countdownEl = document.getElementById('countdown');
+                    if (countdownEl) {
+                        countdownEl.textContent = "Beta Closed";
+                    }
+                }
+            }
+            
+            // Update immediately and then every second
+            updateDisplay();
+            setInterval(updateDisplay, 1000);
+        }
