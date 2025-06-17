@@ -1,4 +1,4 @@
-/<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,9 +9,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            .form-row {
-                grid-template-columns: 1fr;
-            }
         }
 
         body {
@@ -76,20 +73,8 @@
 
         .header-content {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
-        }
-
-        .logo {
-            height: 60px;
-            width: auto;
-            filter: drop-shadow(0 4px 12px rgba(66, 133, 244, 0.4));
-            transition: all 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-            filter: drop-shadow(0 6px 20px rgba(66, 133, 244, 0.6));
         }
 
         .beta-badge {
@@ -109,6 +94,21 @@
             justify-content: center;
             text-align: center;
             padding: 60px 0;
+        }
+
+        /* Logo centered and prominent */
+        .hero-logo {
+            margin: 0 auto 40px auto;
+            display: block;
+            height: 150px;
+            width: auto;
+            filter: drop-shadow(0 8px 25px rgba(66, 133, 244, 0.5));
+            transition: all 0.4s ease;
+        }
+
+        .hero-logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 12px 35px rgba(66, 133, 244, 0.7));
         }
 
         .hero-title {
@@ -441,6 +441,16 @@
             font-size: 16px;
         }
 
+        .error-message {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+
         /* Countdown Timer */
         .countdown-section {
             background: rgba(255, 255, 255, 0.05);
@@ -473,7 +483,13 @@
             font-weight: 600;
             margin-top: 10px;
         }
+
         @media (max-width: 768px) {
+            .hero-logo {
+                height: 100px;
+                margin-bottom: 30px;
+            }
+
             .hero-title {
                 font-size: 32px;
             }
@@ -495,6 +511,10 @@
             }
 
             .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
         }
@@ -525,7 +545,6 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="https://raw.githubusercontent.com/I-am-Soma/unicorn-landing/main/logo%20transparente.png" alt="Unicorn AI" class="logo">
                 <div class="beta-badge">Private Beta</div>
             </div>
         </div>
@@ -533,6 +552,9 @@
 
     <main class="container">
         <div class="main-content">
+            <!-- Logo centrado y prominente -->
+            <img src="https://raw.githubusercontent.com/I-am-Soma/unicorn-landing/main/logo%20transparente.png" alt="Unicorn AI" class="hero-logo fade-in">
+            
             <h1 class="hero-title fade-in">AI Sales Agent That Never Sleeps,<br>Never Quits.</h1>
             
             <p class="hero-subtitle fade-in delay-1">Complete Sales Cycle Automation • $5 to $5M Investment Range</p>
@@ -652,6 +674,8 @@
                     <h2 class="form-title">Join Our Private Beta</h2>
                     <p class="form-subtitle">Get 3 months free and see 3x more conversions</p>
                     
+                    <div id="form-error" class="error-message"></div>
+                    
                     <form id="contact-form">
                         <div class="form-row">
                             <div class="form-group">
@@ -723,6 +747,10 @@
     </main>
 
     <script>
+        // Supabase configuration
+        const SUPABASE_URL = 'https://wxbvusaumkdjnrsonxkw.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM';
+
         // Enhanced particles with more dynamic movement
         function createParticles() {
             const container = document.getElementById('particles');
@@ -753,35 +781,31 @@
             }
         }
 
-        // Initialize countdown when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            updateCountdown(); // Initialize functional countdown
-            
-            // Add some random movement to particles
-            setInterval(() => {
-                const particles = document.querySelectorAll('.particle');
-                particles.forEach(particle => {
-                    if (Math.random() < 0.1) { // 10% chance each interval
-                        particle.style.transform = `translateX(${Math.random() * 20 - 10}px) translateY(${Math.random() * 20 - 10}px)`;
-                    }
+        // Function to send data to Supabase
+        async function submitToSupabase(formData) {
+            try {
+                const response = await fetch(`${SUPABASE_URL}/rest/v1/contact_form`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(formData)
                 });
-            }, 3000);
 
-            // Intersection Observer for animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+                }
 
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-        });
+                return { success: true };
+            } catch (error) {
+                console.error('Error submitting to Supabase:', error);
+                throw error;
+            }
+        }
 
         // Form handling functions
         function openForm() {
@@ -791,61 +815,23 @@
             });
         }
 
-        // Form submission
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contact-form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const submitBtn = form.querySelector('.submit-btn');
-                    submitBtn.textContent = 'Submitting...';
-                    submitBtn.disabled = true;
-                    
-                    // Simulate form submission
-                    setTimeout(() => {
-                        document.getElementById('contact-form').style.display = 'none';
-                        document.getElementById('form-success').style.display = 'block';
-                    }, 1500);
-                });
-            }
-        });
-
-        // Countdown timer - functional with real countdown
-        function updateCountdown() {
-            // Set target date: 20 days, 19 hours, 33 minutes from now
-            const now = new Date().getTime();
-            const targetTime = now + (20 * 24 * 60 * 60 * 1000) + (19 * 60 * 60 * 1000) + (33 * 60 * 1000);
-            
-            function updateDisplay() {
-                const currentTime = new Date().getTime();
-                const distance = targetTime - currentTime;
-                
-                if (distance > 0) {
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    
-                    const countdownEl = document.getElementById('countdown');
-                    if (countdownEl) {
-                        countdownEl.textContent = `${days}d ${hours}h ${minutes}m`;
-                    }
-                } else {
-                    const countdownEl = document.getElementById('countdown');
-                    if (countdownEl) {
-                        countdownEl.textContent = "Beta Closed";
-                    }
-                }
-            }
-            
-            // Update immediately and then every second
-            updateDisplay();
-            setInterval(updateDisplay, 1000);
+        function showError(message) {
+            const errorDiv = document.getElementById('form-error');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
         }
 
-        // Initialize countdown
-        updateCountdown();
-    </script>
-</body>
-</html>
+        function hideError() {
+            const errorDiv = document.getElementById('form-error');
+            errorDiv.style.display = 'none';
+        }
+
+        // Initialize countdown when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            updateCountdown();
+            
+            // Add some random movement to particles
+            setInterval(function() {
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(function(particle) {
