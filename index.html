@@ -758,39 +758,37 @@
 
     <script>
         // --- Supabase configuration ---
-        // Reemplaza las constantes con la URL y la clave pública de tu proyecto
-        const supabaseUrl = 'https://TU-PROYECTO.supabase.co';
-        const supabaseKey = 'TU_PUBLIC_ANON_KEY';
+        // Conectado al proyecto wxbvusaumkdjnrsonxkw
+        const supabaseUrl = 'https://wxbvusaumkdjnrsonxkw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-        // Create particles - SIMPLIFIED and WORKING
+        // Enhanced particles with more dynamic movement
         function createParticles() {
             const container = document.getElementById('particles');
-            if (!container) return;
-            
-            const particleCount = 60;
-            
+            const particleCount = 80; // Más partículas
+
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                
-                // Bigger particles (6px - 15px)
-                const size = Math.random() * 10 + 6;
+
+                const size = Math.random() * 8 + 3; // Partículas más grandes (3px - 11px)
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 8 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
-                
-                // Visible colors
+                particle.style.animationDelay = Math.random() * 12 + 's';
+                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+
+                // Random colors matching Unicorn AI brand
                 const colors = [
-                    'rgba(66, 133, 244, 0.8)',
-                    'rgba(0, 188, 212, 0.8)',
-                    'rgba(156, 39, 176, 0.8)',
-                    'rgba(233, 30, 99, 0.6)'
+                    'radial-gradient(circle, rgba(66, 133, 244, 0.8) 0%, rgba(0, 188, 212, 0.4) 100%)',
+                    'radial-gradient(circle, rgba(0, 188, 212, 0.8) 0%, rgba(156, 39, 176, 0.4) 100%)',
+                    'radial-gradient(circle, rgba(156, 39, 176, 0.8) 0%, rgba(233, 30, 99, 0.4) 100%)',
+                    'radial-gradient(circle, rgba(233, 30, 99, 0.6) 0%, rgba(66, 133, 244, 0.3) 100%)',
+                    'radial-gradient(circle, rgba(0, 255, 136, 0.7) 0%, rgba(66, 133, 244, 0.3) 100%)'
                 ];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                
+
                 container.appendChild(particle);
             }
         }
@@ -838,6 +836,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
             updateCountdown();
+
+            // Add some random movement to particles
+            setInterval(function() {
+                const particles = document.querySelectorAll('.particle');
+                particles.forEach(function(particle) {
+                    if (Math.random() < 0.1) {
+                        particle.style.transform = `translateX(${Math.random() * 20 - 10}px) translateY(${Math.random() * 20 - 10}px)`;
+                    }
+                });
+            }, 3000);
             
             // Form submission handler
             const form = document.getElementById('contact-form');

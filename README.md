@@ -13,8 +13,8 @@ Esta landing page ofrece un formulario de registro para la beta privada de **Uni
 
 1. Crea un proyecto en [Supabase](https://supabase.com/).
 2. Copia la URL del proyecto y la clave pública (anon) desde la sección **API**.
-3. En `index.html`, busca la sección de configuración de Supabase (comentada en el código) e introduce allí tu URL (`https://TU-PROYECTO.supabase.co`) y tu clave pública (`TU_PUBLIC_ANON_KEY`).
-4. La lógica de envío ya está preparada para guardar los datos del formulario en la tabla `contact_form` de tu base de datos de Supabase.
+3. Este repositorio ya incluye una configuración de ejemplo con la URL `https://wxbvusaumkdjnrsonxkw.supabase.co` y la clave pública correspondiente.
+4. La lógica de envío guarda los datos en la tabla `contact_form` de tu base de datos de Supabase.
 
 ## Ejecutar el formulario en local
 
