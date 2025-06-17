@@ -753,7 +753,15 @@
         </div>
     </footer>
 
+    <!-- Load Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
+        // --- Supabase configuration ---
+        // Reemplaza las constantes con la URL y la clave pública de tu proyecto
+        const supabaseUrl = 'https://TU-PROYECTO.supabase.co';
+        const supabaseKey = 'TU_PUBLIC_ANON_KEY';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
         // Create particles - SIMPLIFIED and WORKING
         function createParticles() {
             const container = document.getElementById('particles');
@@ -834,21 +842,43 @@
             // Form submission handler
             const form = document.getElementById('contact-form');
             if (form) {
-                form.addEventListener('submit', function(e) {
+                form.addEventListener('submit', async function(e) {
                     e.preventDefault();
-                    
+
                     const submitBtn = form.querySelector('.submit-btn');
                     if (submitBtn) {
                         submitBtn.textContent = 'Submitting...';
                         submitBtn.disabled = true;
                     }
-                    
-                    setTimeout(function() {
+
+                    const data = {
+                        first_name: form.firstName.value,
+                        last_name: form.lastName.value,
+                        email: form.email.value,
+                        company: form.company.value,
+                        role: form.role.value,
+                        budget: form.budget.value,
+                        current_challenge: form.currentChallenge.value
+                    };
+
+                    const { error } = await supabase
+                        .from('contact_form')
+                        .insert([data]);
+
+                    if (!error) {
                         const contactForm = document.getElementById('contact-form');
                         const successDiv = document.getElementById('form-success');
                         if (contactForm) contactForm.style.display = 'none';
                         if (successDiv) successDiv.style.display = 'block';
-                    }, 1500);
+                        form.reset();
+                    } else {
+                        alert('Error submitting form. Please try again later.');
+                    }
+
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Get Beta Access Now';
+                        submitBtn.disabled = false;
+                    }
                 });
             }
 
