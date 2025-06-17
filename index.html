@@ -32,8 +32,9 @@
         .particle {
             position: absolute;
             border-radius: 50%;
-            animation: float-particle 12s ease-in-out infinite;
+            animation: float-particle 8s ease-in-out infinite;
             opacity: 0.8;
+            z-index: 1;
         }
 
         @keyframes float-particle {
@@ -42,15 +43,15 @@
                 opacity: 0.6;
             }
             25% {
-                transform: translateY(-50px) translateX(30px) rotate(90deg);
+                transform: translateY(-30px) translateX(20px) rotate(90deg);
                 opacity: 1;
             }
             50% {
-                transform: translateY(-25px) translateX(-40px) rotate(180deg);
+                transform: translateY(-15px) translateX(-25px) rotate(180deg);
                 opacity: 0.4;
             }
             75% {
-                transform: translateY(-60px) translateX(25px) rotate(270deg);
+                transform: translateY(-40px) translateX(15px) rotate(270deg);
                 opacity: 0.8;
             }
         }
@@ -428,16 +429,6 @@
             font-size: 16px;
         }
 
-        .error-message {
-            background: rgba(255, 107, 107, 0.1);
-            border: 1px solid rgba(255, 107, 107, 0.3);
-            color: #ff6b6b;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            display: none;
-        }
-
         /* Countdown Timer */
         .countdown-section {
             background: rgba(255, 255, 255, 0.05);
@@ -472,11 +463,6 @@
         }
 
         @media (max-width: 768px) {
-            .hero-logo {
-                height: 100px;
-                margin-bottom: 30px;
-            }
-
             .hero-title {
                 font-size: 32px;
             }
@@ -500,7 +486,7 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
-
+            
             .form-row {
                 grid-template-columns: 1fr;
             }
@@ -559,8 +545,6 @@
 </head>
 <body>
     <div id="particles"></div>
-
-
 
     <main class="container">
         <div class="main-content">
@@ -689,8 +673,6 @@
                     <h2 class="form-title">Join Our Private Beta</h2>
                     <p class="form-subtitle">Get 3 months free and see 3x more conversions</p>
                     
-                    <div id="form-error" class="error-message"></div>
-                    
                     <form id="contact-form">
                         <div class="form-row">
                             <div class="form-group">
@@ -772,32 +754,32 @@
     </footer>
 
     <script>
-        // Supabase configuration - removed for manual connection
-
-        // Enhanced particles with more dynamic movement
+        // Create particles - SIMPLIFIED and WORKING
         function createParticles() {
             const container = document.getElementById('particles');
-            const particleCount = 80; // Más partículas
+            if (!container) return;
+            
+            const particleCount = 60;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                const size = Math.random() * 8 + 3; // Partículas más grandes (3px - 11px)
+                // Bigger particles (6px - 15px)
+                const size = Math.random() * 10 + 6;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 12 + 's';
-                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
                 
-                // Random colors matching Unicorn AI brand
+                // Visible colors
                 const colors = [
-                    'radial-gradient(circle, rgba(66, 133, 244, 0.8) 0%, rgba(0, 188, 212, 0.4) 100%)',
-                    'radial-gradient(circle, rgba(0, 188, 212, 0.8) 0%, rgba(156, 39, 176, 0.4) 100%)',
-                    'radial-gradient(circle, rgba(156, 39, 176, 0.8) 0%, rgba(233, 30, 99, 0.4) 100%)',
-                    'radial-gradient(circle, rgba(233, 30, 99, 0.6) 0%, rgba(66, 133, 244, 0.3) 100%)',
-                    'radial-gradient(circle, rgba(0, 255, 136, 0.7) 0%, rgba(66, 133, 244, 0.3) 100%)'
+                    'rgba(66, 133, 244, 0.8)',
+                    'rgba(0, 188, 212, 0.8)',
+                    'rgba(156, 39, 176, 0.8)',
+                    'rgba(233, 30, 99, 0.6)'
                 ];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 
@@ -805,90 +787,17 @@
             }
         }
 
-        // Form handling functions - Global scope
+        // Form handling - SIMPLE and WORKING
         function openForm() {
             const formSection = document.getElementById('contact-form-section');
             if (formSection) {
                 formSection.style.display = 'block';
-                
-                // Scroll to form with a small delay to ensure it's visible
-                setTimeout(function() {
-                    formSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }, 100);
+                formSection.scrollIntoView({ behavior: 'smooth' });
             }
         }
 
-        function showError(message) {
-            const errorDiv = document.getElementById('form-error');
-            if (errorDiv) {
-                errorDiv.textContent = message;
-                errorDiv.style.display = 'block';
-            }
-        }
-
-        function hideError() {
-            const errorDiv = document.getElementById('form-error');
-            if (errorDiv) {
-                errorDiv.style.display = 'none';
-            }
-        }
-
-        // Initialize countdown when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            updateCountdown();
-            
-            // Add some random movement to particles
-            setInterval(function() {
-                const particles = document.querySelectorAll('.particle');
-                particles.forEach(function(particle) {
-                    if (Math.random() < 0.1) { // 10% chance each interval
-                        particle.style.transform = `translateX(${Math.random() * 20 - 10}px) translateY(${Math.random() * 20 - 10}px)`;
-                    }
-                });
-            }, 3000);
-
-            // Intersection Observer for animations
-            const observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.fade-in').forEach(function(el) {
-                observer.observe(el);
-            });
-        });
-
-        // Form submission - SEPARATE DOMContentLoaded like in original
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contact-form');
-            if (form) {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const submitBtn = form.querySelector('.submit-btn');
-                    submitBtn.textContent = 'Submitting...';
-                    submitBtn.disabled = true;
-                    
-                    // Simulate form submission
-                    setTimeout(function() {
-                        document.getElementById('contact-form').style.display = 'none';
-                        document.getElementById('form-success').style.display = 'block';
-                    }, 1500);
-                });
-            }
-        });
-
-        // Countdown timer - functional with real countdown
+        // Countdown timer
         function updateCountdown() {
-            // Set target date: 20 days, 19 hours, 33 minutes from now
             const now = new Date().getTime();
             const targetTime = now + (20 * 24 * 60 * 60 * 1000) + (19 * 60 * 60 * 1000) + (33 * 60 * 1000);
             
@@ -913,10 +822,48 @@
                 }
             }
             
-            // Update immediately and then every second
             updateDisplay();
             setInterval(updateDisplay, 1000);
         }
 
-        // Initialize countdown
-        updateCountdown();
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            updateCountdown();
+            
+            // Form submission handler
+            const form = document.getElementById('contact-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = form.querySelector('.submit-btn');
+                    if (submitBtn) {
+                        submitBtn.textContent = 'Submitting...';
+                        submitBtn.disabled = true;
+                    }
+                    
+                    setTimeout(function() {
+                        const contactForm = document.getElementById('contact-form');
+                        const successDiv = document.getElementById('form-success');
+                        if (contactForm) contactForm.style.display = 'none';
+                        if (successDiv) successDiv.style.display = 'block';
+                    }, 1500);
+                });
+            }
+
+            // Intersection Observer for animations
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.fade-in').forEach(function(el) {
+                observer.observe(el);
+            });
+        });
+    </script>
