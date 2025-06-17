@@ -90,15 +90,12 @@
             filter: drop-shadow(0 12px 35px rgba(66, 133, 244, 0.7));
         }
 
-        .beta-badge {
-            background: linear-gradient(135deg, #4285f4, #e91e63);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
+        .private-beta-text {
+            color: #888;
+            font-size: 16px;
+            font-weight: 400;
             margin-bottom: 20px;
-            display: inline-block;
+            display: block;
         }
 
         .hero-title {
@@ -570,8 +567,8 @@
             <!-- Logo centrado y prominente -->
             <img src="https://raw.githubusercontent.com/I-am-Soma/unicorn-landing/main/logo%20transparente.png" alt="Unicorn AI" class="hero-logo fade-in">
             
-            <!-- Beta badge centrado -->
-            <div class="beta-badge fade-in">Private Beta</div>
+            <!-- Texto Private Beta -->
+            <span class="private-beta-text fade-in">Private Beta</span>
             
             <h1 class="hero-title fade-in">AI Sales Agent That Never Sleeps,<br>Never Quits.</h1>
             
@@ -867,41 +864,26 @@
             document.querySelectorAll('.fade-in').forEach(function(el) {
                 observer.observe(el);
             });
+        });
 
-            // Form submission handler
+        // Form submission - SEPARATE DOMContentLoaded like in original
+        document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('contact-form');
             if (form) {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    hideError();
                     
                     const submitBtn = form.querySelector('.submit-btn');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.textContent = 'Enviando...';
+                    submitBtn.textContent = 'Submitting...';
                     submitBtn.disabled = true;
                     
-                    // Simulate form submission (replace with your Supabase connection)
+                    // Simulate form submission
                     setTimeout(function() {
-                        // Show success message
                         document.getElementById('contact-form').style.display = 'none';
                         document.getElementById('form-success').style.display = 'block';
-                    }, 2000);
+                    }, 1500);
                 });
             }
-
-            // Make openForm available globally
-            window.openForm = function() {
-                const formSection = document.getElementById('contact-form-section');
-                formSection.style.display = 'block';
-                
-                // Scroll to form with a small delay to ensure it's visible
-                setTimeout(function() {
-                    formSection.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                }, 100);
-            };
         });
 
         // Countdown timer - functional with real countdown
@@ -935,3 +917,6 @@
             updateDisplay();
             setInterval(updateDisplay, 1000);
         }
+
+        // Initialize countdown
+        updateCountdown();
