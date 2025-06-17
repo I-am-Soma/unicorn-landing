@@ -753,15 +753,7 @@
         </div>
     </footer>
 
-    <!-- Load Supabase library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <script>
-        // --- Supabase configuration ---
-        // Reemplaza las constantes con la URL y la clave pública de tu proyecto
-        const supabaseUrl = 'https://wxbvusaumkdjnrsonxkw.supabase.co';
-        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
         // Create particles - SIMPLIFIED and WORKING
         function createParticles() {
             const container = document.getElementById('particles');
@@ -790,6 +782,59 @@
                     'rgba(233, 30, 99, 0.6)'
                 ];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Form handling - SIMPLE and WORKING
+        function openForm() {
+            const formSection = document.getElementById('contact-form-section');
+            if (formSection) {
+                formSection.style.display = 'block';
+                formSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+    <!-- Load Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+        // --- Supabase configuration ---
+        const supabaseUrl = 'https://wxbvusaumkdjnrsonxkw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM';
+        const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Create particles - SIMPLIFIED and WORKING
+        function createParticles() {
+            const container = document.getElementById('particles');
+            if (!container) return;
+            
+            const particleCount = 60;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Bigger particles (8px - 18px) - MÁS GRANDES
+                const size = Math.random() * 12 + 8;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
+                
+                // Visible colors - MÁS BRILLANTES
+                const colors = [
+                    'rgba(66, 133, 244, 0.9)',
+                    'rgba(0, 188, 212, 0.9)', 
+                    'rgba(156, 39, 176, 0.9)',
+                    'rgba(233, 30, 99, 0.8)',
+                    'rgba(0, 255, 136, 0.7)'
+                ];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = `0 0 10px ${colors[Math.floor(Math.random() * colors.length)]}`;
                 
                 container.appendChild(particle);
             }
@@ -839,44 +884,65 @@
             createParticles();
             updateCountdown();
             
-            // Form submission handler
+            // Form submission handler with Supabase
             const form = document.getElementById('contact-form');
             if (form) {
                 form.addEventListener('submit', async function(e) {
                     e.preventDefault();
 
                     const submitBtn = form.querySelector('.submit-btn');
-                    if (submitBtn) {
-                        submitBtn.textContent = 'Submitting...';
-                        submitBtn.disabled = true;
-                    }
+                    const originalText = submitBtn.textContent;
+                    
+                    // Update button state
+                    submitBtn.textContent = 'Enviando...';
+                    submitBtn.disabled = true;
 
-                    const data = {
-                        first_name: form.firstName.value,
-                        last_name: form.lastName.value,
-                        email: form.email.value,
-                        company: form.company.value,
-                        role: form.role.value,
-                        budget: form.budget.value,
-                        current_challenge: form.currentChallenge.value
-                    };
+                    try {
+                        // Prepare data for Supabase
+                        const formData = {
+                            first_name: form.firstName.value.trim(),
+                            last_name: form.lastName.value.trim(),
+                            email: form.email.value.trim(),
+                            company: form.company.value.trim(),
+                            role: form.role.value,
+                            budget: form.budget.value || null,
+                            current_challenge: form.currentChallenge.value.trim() || null,
+                            created_at: new Date().toISOString()
+                        };
 
-                    const { error } = await supabase
-                        .from('contact_form')
-                        .insert([data]);
+                        console.log('Enviando datos:', formData);
 
-                    if (!error) {
+                        // Insert into Supabase
+                        const { data, error } = await _supabase
+                            .from('contact_form')
+                            .insert([formData])
+                            .select();
+
+                        if (error) {
+                            console.error('Error de Supabase:', error);
+                            throw error;
+                        }
+
+                        console.log('Datos enviados exitosamente:', data);
+
+                        // Show success message
                         const contactForm = document.getElementById('contact-form');
                         const successDiv = document.getElementById('form-success');
+                        
                         if (contactForm) contactForm.style.display = 'none';
                         if (successDiv) successDiv.style.display = 'block';
+                        
+                        // Reset form
                         form.reset();
-                    } else {
-                        alert('Error submitting form. Please try again later.');
-                    }
 
-                    if (submitBtn) {
-                        submitBtn.textContent = 'Get Beta Access Now';
+                    } catch (error) {
+                        console.error('Error completo:', error);
+                        
+                        // Show error message
+                        alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo o contacta a hello@useunicorn.app');
+                        
+                        // Reset button
+                        submitBtn.textContent = originalText;
                         submitBtn.disabled = false;
                     }
                 });
