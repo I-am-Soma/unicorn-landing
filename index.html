@@ -799,6 +799,14 @@
         // Form submission
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('contact-form');
+            const successEl = document.getElementById('form-success');
+
+            // Restore confirmation state on page load
+            if (localStorage.getItem('formSubmitted') === 'true') {
+                if (form) form.style.display = 'none';
+                if (successEl) successEl.style.display = 'block';
+            }
+
             if (form) {
                 form.addEventListener('submit', async function(e) {
                     e.preventDefault();
@@ -818,6 +826,7 @@
 
                     const { error } = await supabase.from('contact_form').insert(data);
                     if (!error) {
+                        localStorage.setItem('formSubmitted', 'true');
                         form.style.display = 'none';
                         document.getElementById('form-success').style.display = 'block';
                     } else {
