@@ -1,4 +1,4 @@
-/<!DOCTYPE html>
+/* Mobile responsive */<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -525,7 +525,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="https://github.com/I-am-Soma/unicorn-landing/blob/main/logo%20transparente.png" alt="Unicorn AI" class="logo">
+                <img src="https://raw.githubusercontent.com/I-am-Soma/unicorn-landing/main/logo%20transparente.png" alt="Unicorn AI" class="logo">
                 <div class="beta-badge">Private Beta</div>
             </div>
         </div>
@@ -763,7 +763,7 @@
                 const particles = document.querySelectorAll('.particle');
                 particles.forEach(particle => {
                     if (Math.random() < 0.1) { // 10% chance each interval
-                        particle.style.transform = translateX(${Math.random() * 20 - 10}px) translateY(${Math.random() * 20 - 10}px);
+                        particle.style.transform = `translateX(${Math.random() * 20 - 10}px) translateY(${Math.random() * 20 - 10}px)`;
                     }
                 });
             }, 3000);
@@ -791,103 +791,61 @@
             });
         }
 
-       <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const submitBtn = form.querySelector('.submit-btn');
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.disabled = true;
-
-      const data = {
-        first_name: document.getElementById('firstName').value,
-        last_name: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        company: document.getElementById('company').value,
-        role: document.getElementById('role').value,
-        budget: document.getElementById('budget').value,
-        current_challenge: document.getElementById('currentChallenge').value
-      };
-
-      try {
-        const response = await fetch('https://wxbvusaumkdjnrsonxkw.supabase.co/rest/v1/contact_form', {
-          method: 'POST',
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM',
-            'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
-          },
-          body: JSON.stringify(data)
+        // Form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contact-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = form.querySelector('.submit-btn');
+                    submitBtn.textContent = 'Submitting...';
+                    submitBtn.disabled = true;
+                    
+                    // Simulate form submission
+                    setTimeout(() => {
+                        document.getElementById('contact-form').style.display = 'none';
+                        document.getElementById('form-success').style.display = 'block';
+                    }, 1500);
+                });
+            }
         });
 
-        if (response.ok) {
-          form.style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
-        } else {
-          const errorData = await response.json();
-          alert('Submission failed: ' + JSON.stringify(errorData));
+        // Countdown timer - functional with real countdown
+        function updateCountdown() {
+            // Set target date: 20 days, 19 hours, 33 minutes from now
+            const now = new Date().getTime();
+            const targetTime = now + (20 * 24 * 60 * 60 * 1000) + (19 * 60 * 60 * 1000) + (33 * 60 * 1000);
+            
+            function updateDisplay() {
+                const currentTime = new Date().getTime();
+                const distance = targetTime - currentTime;
+                
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    const countdownEl = document.getElementById('countdown');
+                    if (countdownEl) {
+                        countdownEl.textContent = `${days}d ${hours}h ${minutes}m`;
+                    }
+                } else {
+                    const countdownEl = document.getElementById('countdown');
+                    if (countdownEl) {
+                        countdownEl.textContent = "Beta Closed";
+                    }
+                }
+            }
+            
+            // Update immediately and then every second
+            updateDisplay();
+            setInterval(updateDisplay, 1000);
         }
-      } catch (error) {
-        alert('Error: ' + error.message);
-      } finally {
-        submitBtn.textContent = 'Get Beta Access Now';
-        submitBtn.disabled = false;
-      }
-    });
-  }
-});
-</script>
-    <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
 
-      const submitBtn = form.querySelector('.submit-btn');
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.disabled = true;
-
-      const data = {
-        first_name: document.getElementById('firstName').value,
-        last_name: document.getElementById('lastName').value,
-        email: document.getElementById('email').value,
-        company: document.getElementById('company').value,
-        role: document.getElementById('role').value,
-        budget: document.getElementById('budget').value,
-        current_challenge: document.getElementById('currentChallenge').value
-      };
-
-      try {
-        const response = await fetch('https://wxbvusaumkdjnrsonxkw.supabase.co/rest/v1/contact_form', {
-          method: 'POST',
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM',
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM',
-            'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
-          },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          form.style.display = 'none';
-          document.getElementById('form-success').style.display = 'block';
-        } else {
-          const errorData = await response.json();
-          alert('Submission failed: ' + JSON.stringify(errorData));
-        }
-      } catch (error) {
-        alert('Error: ' + error.message);
-      } finally {
-        submitBtn.textContent = 'Get Beta Access Now';
-        submitBtn.disabled = false;
-      }
-    });
-  }
-});
-</script>
+        // Initialize countdown
+        updateCountdown();
+    </script>
+</body>
+</html>
