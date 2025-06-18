@@ -19,3 +19,22 @@ Esta landing page ofrece un formulario de registro para la beta privada de **Uni
 ## Ejecutar el formulario en local
 
 No se necesitan dependencias adicionales. Abre `index.html` directamente en tu navegador web favorito y comprueba que el formulario se visualiza correctamente.
+
+## Probar conexión a Supabase con Node.js
+
+Si deseas verificar que puedes leer e insertar en la tabla `contact_form` utilizando el SDK de Supabase para JavaScript, sigue estos pasos:
+
+1. Instala la dependencia:
+   ```bash
+   npm install @supabase/supabase-js
+   ```
+2. Crea un archivo `.env` con tus credenciales:
+   ```
+   SUPABASE_URL=tu_url
+   SUPABASE_KEY=tu_clave_publica
+   ```
+3. Ejecuta el script `supabase_example.js`:
+   ```bash
+   node supabase_example.js
+   ```
+   Este script mostrará las filas existentes e insertará una fila de prueba para validar la conexión.
