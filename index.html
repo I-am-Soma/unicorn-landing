@@ -229,8 +229,10 @@
 
   <script>
     // === CONFIG SUPABASE ===
-    const SUPABASE_URL = 'https://agqzpygitmgfoxrqcptg.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind4YnZ1c2F1bWtkam5yc29ueGt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAxMjU5NTcsImV4cCI6MjA2NTcwMTk1N30.42AnnBnG6uf48kpD6UAggYvDk_4jwYEFgbDL0dsHmoM';
+    // Configuración Supabase para unicorn-landing
+  const SUPABASE_URL = 'https://agqzpygitmgfoxrqcptg.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFncXpweWdpdG1nZm94cnFjcHRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0MjcxMzIsImV4cCI6MjA1NjAwMzEzMn0.viDhdw0Ujc_rUXrTAluw_ZB8sfMAQEh3b61CtzorRnQ';
+
 
     const supabaseClient = (typeof supabase !== 'undefined' && supabase.createClient)
       ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
